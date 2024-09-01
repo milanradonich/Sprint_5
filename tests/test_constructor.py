@@ -1,5 +1,6 @@
 import time
 import pytest
+from selenium.webdriver.common.by import By
 
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -7,41 +8,29 @@ from locators import *
 
 
 class TestConstructor:
-    @pytest.fixture(autouse=True)
-    def setup(self, driver_setup):
-        """
-        фикстура получения двайвера
-        :param driver_setup:
-        :return:
-        """
-        self.driver = driver_setup
-        yield self.driver
-
-    def test_active_menu_sauces(self):
+    def test_active_menu_sauces(self, driver_setup):
         """
         тест проверяет переход в меню конструктор
         :return:
         """
-        div_element = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_SAUCES)
-        div_element.click()
-        time.sleep(2)
+        self.driver = driver_setup
+        self.driver.find_element(By.XPATH, LINK_HEADER_MENU_SAUCES).click()
         WebDriverWait(self.driver, 10).until(
-            expected_conditions.presence_of_element_located((By.CLASS_NAME, "tab_tab_type_current__2BEPc"))
+            expected_conditions.presence_of_element_located((By.XPATH, LINK_HEADER_MENU_SAUCES))
         )
-        assert "tab_tab_type_current__2BEPc" in div_element.get_attribute("class")
+        new_class = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_SAUCES)
+        assert CLASS_LOCATOR in new_class.get_attribute("class")
 
-        div_element = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_FILLINGS)
-        div_element.click()
-        time.sleep(3)
+        self.driver.find_element(By.XPATH, LINK_HEADER_MENU_FILLINGS).click()
         WebDriverWait(self.driver, 10).until(
-            expected_conditions.presence_of_element_located((By.CLASS_NAME, "tab_tab_type_current__2BEPc"))
+            expected_conditions.presence_of_element_located((By.XPATH, LINK_HEADER_MENU_FILLINGS))
         )
-        assert "tab_tab_type_current__2BEPc" in div_element.get_attribute("class")
+        new_class = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_FILLINGS)
+        assert CLASS_LOCATOR in new_class.get_attribute("class")
 
-        div_element = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_BUNS)
-        div_element.click()
-        time.sleep(3)
+        self.driver.find_element(By.XPATH, LINK_HEADER_MENU_BUNS).click()
         WebDriverWait(self.driver, 10).until(
-            expected_conditions.presence_of_element_located((By.CLASS_NAME, "tab_tab_type_current__2BEPc"))
+            expected_conditions.presence_of_element_located((By.XPATH, LINK_HEADER_MENU_BUNS))
         )
-        assert "tab_tab_type_current__2BEPc" in div_element.get_attribute("class")
+        new_class = self.driver.find_element(By.XPATH, LINK_HEADER_MENU_BUNS)
+        assert CLASS_LOCATOR in new_class.get_attribute("class")
