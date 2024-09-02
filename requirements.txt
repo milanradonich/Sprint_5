@@ -1,0 +1,4 @@
+Faker==28.0.0
+pytest==8.3.2
+selenium==4.24.0
+webdriver-manager==4.0.2
